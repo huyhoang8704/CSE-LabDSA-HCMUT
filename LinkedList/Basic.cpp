@@ -95,7 +95,7 @@ void SLinkedList<T>::add(int index, const T& e) {
 //! hiện thực hàm size()
 template<class T>
 int SLinkedList<T>::size() {
-   return count;
+   return this->count;
 }
 template<class T>
 T SLinkedList<T>::get(int index) {
@@ -117,9 +117,7 @@ void SLinkedList<T>::set(int index, const T& e) {
 
 template<class T>
 bool SLinkedList<T>::empty() {
-    /* Check if the list is empty or not. */
-    return !count;
-    
+    return !this->count;   
 }
 
 template<class T>
