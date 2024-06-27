@@ -50,13 +50,10 @@ public:
 //! hiện thực hàm add(const T& e)
 template <class T>
 void SLinkedList<T>::add(const T& e) {
-//! nếu count = 0 thì gán head và tail = node đầu tiên
-    if(count == 0){
-        head =  new Node(e,nullptr);
-        tail = head;
-    }
+    // Chia làm 2 TH rỗng và không rỗng
+    if(this->empty()){  head = tail = new Node(e,nullptr);}
+
     else{
-        
         Node* tmp = new Node(e,nullptr);
       
         tail->next = tmp;
@@ -82,7 +79,7 @@ void SLinkedList<T>::add(int index, const T& e) {
         index --;
         Node* tmp = head;
         Node* New = new Node(e,nullptr);
-        while(index){
+        while(index){    // đi đến trước index
             tmp = tmp->next;
             index--;
         }
@@ -122,7 +119,7 @@ bool SLinkedList<T>::empty() {
 
 template<class T>
 int SLinkedList<T>::indexOf(const T& item) {
-    /* Return the first index wheter item appears in list, otherwise return -1 */
+    /* Return the first index when item appears in list, otherwise return -1 */
     Node* temp = head;
         for (int i = 0; i < count; i++) {
             if (temp->data == item) return i;
@@ -200,10 +197,6 @@ void SLinkedList<T>::clear(){
    tail = nullptr;
    count = 0;
 }
-
-
-
-
 
 
 
