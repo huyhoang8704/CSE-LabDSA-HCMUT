@@ -104,6 +104,27 @@ int mininumBracketAdd(string s) {
     clear();
     return i;
 }
+//!
+string processString(string &s){
+    size_t posOpen = s.find("(");
+    if(posOpen == string::npos) return s;
+
+    size_t posClose = s.find(")" , posOpen);
+
+    if(posClose == string::npos) return s;
+
+    if(posOpen < posClose){
+        s.erase(posOpen,1);
+        s.erase(posClose-1,1);
+        return processString(s);
+    }
+    return s;
+}
+int mininumBracketAdd(string s) {
+    processString(s);
+    return s.length();
+}
+
 
 
 // BÀI 12
