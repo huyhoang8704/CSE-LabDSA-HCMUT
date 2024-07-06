@@ -76,13 +76,13 @@ void SLinkedList<T>::add(int index, const T& e) {
         count ++;
     }
     else{
-        index --;
         Node* tmp = head;
         Node* New = new Node(e,nullptr);
-        while(index){    // đi đến trước index
-            tmp = tmp->next;
-            index--;
-        }
+        for(int i= 0 ; i< index -1 ; i++) tmp = tmp->next;
+        // while(index){    // đi đến trước index
+        //     tmp = tmp->next;
+        //     index--;
+        // }
         New->next = tmp->next;
         tmp->next = New;
         count ++;
@@ -97,7 +97,7 @@ int SLinkedList<T>::size() {
 template<class T>
 T SLinkedList<T>::get(int index) {
     /* Give the data of the element at given index in the list. */
-    if (index<0 || index>count) throw std::out_of_range("Index out of range");
+    if (index<0 || index>= this->count) throw std::out_of_range("Index out of range");
     Node *tmp = head;
     for(int i=0;i<index;i++) tmp = tmp->next;
     return tmp->data;

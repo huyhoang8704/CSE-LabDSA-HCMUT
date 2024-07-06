@@ -1,4 +1,3 @@
-
 #include<iostream>
 
 using namespace std;
@@ -185,6 +184,7 @@ T DLinkedList<T>::removeAt(int index)
     else if(index == 0){
         Node* tmp = head;
         head = head->next;
+        head ->previous = nullptr;
         result = tmp->data;
         delete tmp;
         head->previous = NULL;

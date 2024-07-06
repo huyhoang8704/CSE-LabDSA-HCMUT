@@ -188,8 +188,11 @@ string expand(string s) {
 }
 
 
+
+
+
 int main() {
-   cout << reverseSentence("data structure and algorithm is scary");
+    
 }
 
 

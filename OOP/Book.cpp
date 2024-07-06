@@ -15,9 +15,6 @@ public:
 
     Book(const char* title, const char* authors, int publishingYear):publishingYear(publishingYear)
     {
-        /*
-         * STUDENT ANSWER
-         */
         if (title != nullptr) {
             this->title = new char[strlen(title) + 1];
             strcpy(this->title, title);  // copy
@@ -28,12 +25,12 @@ public:
             strcpy(this->authors, authors);
         }
     }
-    // copy constructor
+
     Book(const Book &book) : title(nullptr), authors(nullptr), publishingYear(book.publishingYear)
     {
         if (book.title != nullptr) {
             this->title = new char[strlen(book.title) + 1];
-            strcpy(this->title, book.title);
+            strcpy(this->title, book.title);  // copy
         }
         
         if (book.authors != nullptr) {
@@ -44,53 +41,45 @@ public:
     
     void setTitle(const char* title)
     {
-        this ->title = new char[strlen(title) + 1];
-        int i=0;
-        while(title[i]){
-            this->title[i] = title[i];
-            i++;
+        if(title != nullptr){
+            this->title = new char[strlen(title) + 1];
+            strcpy(this->title, title);
         }
-        this->title[i]= '\0';
-
     }
 
     void setAuthors(const char* authors)
     {
-        this->authors = new char[strlen(authors) + 1];
-        int i=0; 
-        while(authors[i]){
-            this->authors[i] = authors[i];
-            i++;
+        if(authors != nullptr){
+            this->authors = new char[strlen(authors) + 1];
+            strcpy(this->authors, authors);
         }
-        this->authors[i] = '\0';
-
     }
 
     void setPublishingYear(int publishingYear)
     {
-        this ->publishingYear = publishingYear;
+        this->publishingYear = publishingYear;
     }
 
     char* getTitle() const
     {
-        return title;
+        return this->title;
     }
 
     char* getAuthors() const
     {
-        return authors;
+        return this->authors;
     }
 
     int getPublishingYear() const
     {
-        return publishingYear;
+        return this->publishingYear;
     }
 
     ~Book()
     {
-        delete[] title;
-        delete [] authors;
-        publishingYear =0;
+        delete[] this->title;
+        delete[] this->authors;
+        this->publishingYear = 0;
     }
 
     void printBook(){

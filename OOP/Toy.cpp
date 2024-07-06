@@ -37,11 +37,7 @@ private:
     Color color;
 
 public:
-    CarToy(double price, Color color) : Toy(price) , color(color)
-    {
-    
-    }
-    //CarToy(){}
+    CarToy(double price, Color color) : Toy(price) , color(color){}
 
     void printType()
     {
@@ -57,9 +53,7 @@ private:
     Size size;
 
 public:
-    PuzzleToy(double price, Size size) : Toy(price) , size(size)
-    {
-    }
+    PuzzleToy(double price, Size size) : Toy(price) , size(size) {}
 
     void printType()
     {
