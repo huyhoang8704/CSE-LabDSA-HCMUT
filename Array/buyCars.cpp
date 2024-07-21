@@ -24,14 +24,13 @@ void QuickSort(int a[],int l,int r){
 
 
 
-
-int buyCars(int a[],int n,int k){
-    int cnt=0;
-    QuickSort(a,0,n-1);
-    for(int i=0;i<n;i++){
-        if(k >= a[i]){
+int buyCar(int* nums, int length, int k) {
+    int cnt = 0;
+    QuickSort(nums, 0, length - 1);
+    for (int i = 0; i < length; i++) {
+        if (k >= nums[i]) {
+            k -= nums[i];
             cnt++;
-            k-= a[i];
         }
     }
     return cnt;
@@ -40,5 +39,5 @@ int buyCars(int a[],int n,int k){
 int main(){
     int a[5]={20,50,30,40,90};
     int n = sizeof(a)/ sizeof(a[0]);
-    cout << buyCars(a,n,90);
+    cout << buyCar(a,n,90);
 }

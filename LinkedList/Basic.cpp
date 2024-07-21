@@ -51,7 +51,7 @@ public:
 template <class T>
 void SLinkedList<T>::add(const T& e) {
     // Chia làm 2 TH rỗng và không rỗng
-    if(this->empty()){  head = tail = new Node(e,nullptr);}
+    if(!this->count){  head = tail = new Node(e,nullptr);}
 
     else{
         Node* tmp = new Node(e,nullptr);

@@ -34,13 +34,13 @@ void SelectionSortTotal(int a[], int n){
     for (int i=0;i<n-1;i++){
         int min=i;
         for (int j=i+1;j<n;j++){
-                total += 6;
+                total += 5;
             if (a[j]<a[min]){
                 min=j;
 
             } 
         }
-        total +=12;
+        total +=5;
         swap(a[i], a[min]);
         cout << total << endl;
         print(a,n);

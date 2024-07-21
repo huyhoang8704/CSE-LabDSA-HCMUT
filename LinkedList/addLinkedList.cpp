@@ -91,7 +91,24 @@ LLNode* addLinkedList(LLNode* l0, LLNode* l1) {
      if(number == 1) tmp->next = new LLNode(1,NULL);
     return result->next;
 }
-
+LLNode* rotateLinkedList(LLNode* head, int k) {
+    // STUDENT ANSWER
+    if (head == nullptr)
+    return nullptr;
+    for (int i = 0; i < k; i++)
+    {
+        LLNode *tmp = head;
+        while (tmp -> next -> next != nullptr)
+        {
+            tmp = tmp -> next;
+        }
+        LLNode * rotate = tmp -> next;
+        tmp -> next = nullptr;
+        rotate -> next = head;
+        head = rotate;
+    }
+    return head;
+}
 int main(){
 
 int arr1[] = {2 , 9};  // 92 
