@@ -37,6 +37,42 @@ vector<int> stock_span(const vector<int>& ns) {
 }
 
 
+//! True
+vector<int> stock_span(const vector<int> &ns)
+{
+    // STUDENT ANSWER
+
+    vector<int> result(ns.size());
+    stack<int> a, b;
+    for (int i = 0; i < int(result.size()); i++)
+    {
+        result[i] = 1;
+    }
+    for (int i = 0; i < int(ns.size()); i++)
+    {
+        a.push(ns[i]);
+    }
+    while (!a.empty())
+    {
+        b = a;
+        b.pop();
+        while (!b.empty())
+        {
+            if (b.top() < a.top())
+            {
+                result[a.size() - 1] += 1;
+                b.pop();
+            }
+            else
+            {
+                break;
+            }
+        }
+        a.pop();
+    }
+    return result;
+}
+
 
 
 
