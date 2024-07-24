@@ -93,7 +93,7 @@ void DataLog::save()
      for (auto i = logList.begin(); i != logList.end(); i++) {
             cout << "[ " << *i << " ] => ";
         }
-        cout<<endl;
+        // cout<<endl;
 
 }
 

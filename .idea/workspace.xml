@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="dfb52500-4b51-43ec-9bf5-ff84ec0de33e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Array/buyCars.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Array/buyCars.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinkedList/Basic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LinkedList/Basic.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinkedList/addLinkedList.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LinkedList/addLinkedList.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sort/basic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Sort/basic.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sort/basic.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Sort/basic.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/text.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text.exe" beforeDir="false" afterPath="$PROJECT_DIR$/text.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +27,9 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Admin/source/repos/JavaSpringboot",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
