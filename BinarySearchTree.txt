@@ -1,0 +1,247 @@
+//////////////////////////////////////////////////////////////////////////////////
+Node *add(Node *node, T value)
+{
+    if (node == nullptr)
+    {
+        return new Node(value);
+    }
+    if (value < node->value)
+    {
+        node->pLeft = add(node->pLeft, value);
+    }
+    else
+    {
+        node->pRight = add(node->pRight, value);
+    }
+    return node;
+}
+
+void add(T value)
+{
+    root = add(root, value);
+}
+
+Node *minValueNode(Node *node)
+{
+    Node *current = node;
+    while (current && current->pLeft != nullptr)
+        current = current->pLeft;
+    return current;
+}
+
+Node *deleteNode(Node *node, T value)
+{
+    if (node == nullptr)
+        return node;
+    if (value < node->value)
+        node->pLeft = deleteNode(node->pLeft, value);
+    else if (value > node->value)
+        node->pRight = deleteNode(node->pRight, value);
+    else
+    {
+        if (node->pLeft == nullptr)
+        {
+            Node *temp = node->pRight;
+            delete node;
+            return temp;
+        }
+        else if (node->pRight == nullptr)
+        {
+            Node *temp = node->pLeft;
+            delete node;
+            return temp;
+        }
+        Node *temp = minValueNode(node->pRight);
+        node->value = temp->value;
+        node->pRight = deleteNode(node->pRight, temp->value);
+    }
+    return node;
+}
+
+void deleteNode(T value)
+{
+    root = deleteNode(root, value);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+ vector<int> levelAlterTraverse(BSTNode* root) {
+        if(root == NULL) return {};
+        queue<BSTNode*> q;
+        vector<vector<int>> vv;
+        vector<int> result;
+        q.push(root);
+        q.push(NULL);
+        int i = 0;
+        while(q.size()){
+            BSTNode* tmp = q.front();
+            q.pop();
+            if(tmp == NULL){
+                vv.push_back(result);
+                result.clear();
+                i++;
+                if(q.size()) q.push(NULL);
+                continue;
+            }
+            result.push_back(tmp->val);
+            if(tmp->left) q.push(tmp->left);
+            if(tmp->right) q.push(tmp->right);
+        }
+        int len = vv.size();
+        for(int i = 0; i < len; i++){
+            int length = vv[i].size();
+            if(i % 2 == 0) for(int j = 0; j < length; j++) result.push_back(vv[i][j]);
+            else           for(int j = length - 1; j >= 0; j--) result.push_back(vv[i][j]);
+        }
+        return result;
+    }
+//////////////////////////////////////////////////////////////////////////////////
+    //* return value nhỏ thứ k trong cây
+    void  smallest(BSTNode* root, vector<int>& result){
+        if(root == NULL) return;
+        smallest(root->left,result);
+        result.push_back(root->val);
+        smallest(root->right,result);
+    }
+    int kthSmallest(BSTNode* root, int k) {
+        vector<int> result;
+        smallest(root,result);
+        return result[k - 1];
+    }
+
+//////////////////////////////////////////////////////////////////////////////////
+    int rangeCount(BTNode* root, int lo, int hi) {
+        if(!root) return 0;
+        int left = rangeCount(root ->left , lo ,hi);
+        int right = rangeCount(root->right , lo , hi);
+        if(root->val >= lo && root->val <= hi) return 1 + left + right;
+        return left + right;
+    }
+//////////////////////////////////////////////////////////////////////////////////
+    int singleChild(BSTNode* root) {
+        if(root == NULL) return 0;
+        else if(root->left == NULL && root->right != NULL) return  1 + singleChild(root->right);
+        else if(root->right == NULL && root->left != NULL) return  1 + singleChild(root->left);
+        
+        return singleChild(root->right) + singleChild(root->left);
+    }
+
+//////////////////////////////////////////////////////////////////////////////////
+BSTNode* find(BSTNode* root, int lo, int hi){
+    if(root == NULL) return NULL;
+    BSTNode* tmp = root;
+    while(tmp){
+        if(tmp->val >= lo && tmp->val <= hi) break;
+        else if(tmp->val > hi) tmp = tmp->left;
+        else tmp = tmp->right;
+    }
+    return tmp;
+}
+
+BSTNode* del(BSTNode* root, int lo, int hi){
+    if(root == NULL) return NULL;
+    else if(root->val < lo) return del(root->right,lo,hi);
+    else if(root->val > hi) return del(root->left,lo,hi);
+    root->left = del(root->left,lo,hi);
+    root->right= del(root->right,lo,hi);
+    return root;
+}
+
+
+BSTNode* subtreeWithRange(BSTNode* root, int lo, int hi) {
+     root = find(root, lo, hi);
+     root = del(root,lo,hi);
+    return root;
+}
+//////////////////////////////////////////////////////////////////////////////////
+bool findValue(Node *node, int value)
+{
+    if (node == nullptr)
+    {
+        return false;
+    }
+
+    if (node->value == value)
+    {
+        return true;
+    }
+    else if (value < node->value)
+    {
+        return findValue(node->pLeft, value);
+    }
+    else
+    {
+        return findValue(node->pRight, value);
+    }
+}
+
+bool find(int i)
+{
+    return findValue(root, i);
+}
+
+T sumRange(Node *node, T l, T r)
+{
+    if (node == nullptr)
+    {
+        return 0;
+    }
+
+    if (node->value < l)
+    {
+        return sumRange(node->pRight, l, r);
+    }
+    else if (node->value > r)
+    {
+        return sumRange(node->pLeft, l, r);
+    }
+    else
+    {
+        return node->value + sumRange(node->pLeft, l, r) + sumRange(node->pRight, l, r);
+    }
+}
+
+T sum(T l, T r)
+{
+    return sumRange(root, l, r);
+}
+//////////////////////////////////////////////////////////////////////////////////
+T getMinRec(Node *node)
+{
+    if (node == nullptr)
+    {
+        return T();
+    }
+
+    if (node->pLeft == nullptr)
+    {
+        return node->value;
+    }
+
+    return getMinRec(node->pLeft);
+}
+
+T getMin()
+{
+    return getMinRec(root);
+}
+
+T getMaxRec(Node *node)
+{
+    if (node == nullptr)
+    {
+        return T();
+    }
+
+    if (node->pRight == nullptr)
+    {
+        return node->value;
+    }
+
+    return getMaxRec(node->pRight);
+}
+
+T getMax()
+{
+    return getMaxRec(root);
+}
