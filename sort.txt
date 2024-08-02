@@ -1,0 +1,473 @@
+template <class T>
+void SLinkedList<T>::bubbleSort()
+{
+    if(this->head==nullptr)return;
+    Node*travel=this->head;
+    while(travel!=nullptr){
+        bool swap=false;
+        Node*after=travel->next;
+        while(after!=nullptr){
+            if(after->data<travel->data){
+                T temp=after->data;
+                after->data=travel->data;
+                travel->data=temp;
+                swap=true;
+            }
+            after=after->next;
+            travel=travel->next;
+        }
+        
+        if(!swap)break;
+        printList();
+        travel=this->head;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+template <class T>
+void Sorting<T>::selectionSort(T *start, T *end)
+{
+    T* result = start;
+    while(start != end - 1){
+//! Con trỏ min trỏ đến phần tử nhỏ nhất trong phạm vi chưa sắp xếp
+        T* min = start;
+//! Con trỏ tmp dùng để duyệt qua các phần tử còn lại
+        T* tmp = start + 1;
+        while(tmp != end){
+//! Nếu phần tử tại tmp nhỏ hơn phần tử nhỏ nhất hiện tại, cập nhật min
+            if(*tmp < * min){
+                min = tmp;
+            }
+            tmp++;
+        }
+//! Hoán đổi phần tử nhỏ nhất tìm được với phần tử đầu tiên trong phạm vi chưa sắp xếp
+        swap(*start, *min);
+//! in ra phần tử 
+        Sorting<T>::printArray(result,end);
+        start++;
+       
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
+
+static void sortSegment(T* start, T* end, int segment_idx, int cur_segment_total){
+        int n=end-start;
+        for(int i=segment_idx;i<n;i+=cur_segment_total){
+            for(int j=i+cur_segment_total; j<n; j+=cur_segment_total){
+                if(start[j]<start[i]){
+                    int temp=start[j];
+                    start[j]=start[i];
+                    start[i]=temp;
+                }
+            }
+        }
+    }
+
+static void ShellSort(T* start, T* end, int* num_segment_list, int num_phases){
+        for(int i=num_phases-1;i>=0;i--){
+            cout<<num_segment_list[i]<<" segments: ";
+            for(int j=0;j<num_segment_list[i];j++){
+                sortSegment(start,end,j,num_segment_list[i]);
+            }
+            printArray(start,end);
+        }
+}
+///////////////////////////////////////////////////////////////////////////////
+
+static T* Partition(T* start, T* end) {
+    // TODO: return the pointer which points to the pivot after rearrange the array.
+       if (start == end)
+        {
+            return start;
+        }
+        int count = end - start + 1;
+        int i = 1;
+        int j = count - 1;
+        while (i <= j)
+        {
+            while (start[i] > start[0] )
+            {
+                i++;
+            }
+            while (start[j] < start[0] && j >= 1)
+            {
+                j--;
+            }
+            if (i < j)
+            {
+                swap(start[i], start[j]);
+                i++;
+                j--;
+            }
+           
+        }
+        swap(start[0], start[j]);
+        return start + j;
+
+}
+
+static void QuickSort(T* start, T* end) {
+    // TODO
+    // In this question, you must print out the index of pivot in subarray after everytime calling method Partition.
+     if (end - start > 0)
+        {
+            T *x = Partition(start, end - 1);
+            cout << x - start << " ";
+            QuickSort(start, x);
+            QuickSort(x + 1, end);
+        }
+}
+///////////////////////////////////////////////////////////////////////////////
+
+static void merge(T* left, T* middle, T* right){
+    /*TODO*/
+     //! Khai báo mảng tạm thời
+    T* arr = left;
+    int l = 0, m = middle - left, r = right - left;
+    //! Kích thước mảng con thứ nhất
+    int n1 = m - l + 1; 
+    //! Kích thước mảng con thứ hai
+    int n2 = r - m; 
+  
+    // Create temp arrays 
+    //! Tạo mảng tạm thời  
+    int L[n1], R[n2]; 
+  
+    //* Copy data to temp arrays L[] and R[]  
+ //! Sao chép dữ liệu vào mảng tạm thời L[] và R[]
+    for(int i = 0; i < n1; i++) 
+        L[i] = arr[l + i]; 
+    for(int j = 0; j < n2; j++) 
+        R[j] = arr[m + 1 + j]; 
+  
+    // Merge the temp arrays back into arr[l..r] 
+      int i = 0;
+    //* Initial index of second subarray 
+
+    int j = 0;  
+      
+    //* Initial index of merged subarray 
+    int k = l; 
+      
+    while (i < n1 && j < n2) 
+    { 
+        if (L[i] <= R[j])  
+        { 
+            arr[k] = L[i]; 
+            i++; 
+        } 
+        else 
+        { 
+            arr[k] = R[j]; 
+            j++; 
+        } 
+        k++; 
+    } 
+  
+    //* Copy the remaining elements of 
+    //* L[], if there are any  
+    while (i < n1)  
+    { 
+        arr[k] = L[i]; 
+        i++; 
+        k++; 
+    } 
+  
+    //* Copy the remaining elements of 
+    //* R[], if there are any  
+    while (j < n2) 
+    { 
+        arr[k] = R[j]; 
+        j++; 
+        k++; 
+    }
+    Sorting::printArray(left, right);
+}
+
+static void mergeSort(T* start, T* end){
+    if(start < end){
+       T* mid = (end - start) / 2 + start;
+       mergeSort(start, mid);
+       mergeSort(mid+1,end);
+       merge(start, mid, end);
+   }
+}
+///////////////////////////////////////////////////////////////////////////////
+// You must use the nodes in the original list and must not modify ListNode's val attribute.
+// Hint: You should complete the function mergeLists first and validate it using our first testcase example
+
+ListNode *mergeLists(ListNode *a, ListNode *b)
+{
+    ListNode *result = nullptr;
+    if (a == nullptr)
+        return b;
+    if (b == nullptr)
+        return a;
+    if (a->val <= b->val)
+    {
+        result = a;
+        result->next = mergeLists(a->next, b);
+    }
+    else
+    {
+        result = b;
+        result->next = mergeLists(a, b->next);
+    }
+    return result;
+}
+
+void splitList(ListNode *source, ListNode **front, ListNode **back)
+{
+    ListNode *ptr1;
+    ListNode *ptr2;
+    ptr2 = source;
+    ptr1 = source->next;
+
+    // ptr1 is incrmented twice and ptr2 is icremented once.
+    while (ptr1 != NULL)
+    {
+        ptr1 = ptr1->next;
+        if (ptr1 != NULL)
+        {
+            ptr2 = ptr2->next;
+            ptr1 = ptr1->next;
+        }
+    }
+
+    // ptr2 is at the midpoint.
+    *front = source;
+    *back = ptr2->next;
+    ptr2->next = NULL;
+}
+
+// Sort and unsorted list given its head pointer
+ListNode *mergeSortList(ListNode *head)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
+        return head;
+    }
+
+    // split list
+    ListNode *ptr1;
+    ListNode *ptr2;
+    splitList(head, &ptr1, &ptr2);
+
+    // recursively merge sort
+    ptr1 = mergeSortList(ptr1);
+    ptr2 = mergeSortList(ptr2);
+
+    return mergeLists(ptr1, ptr2);
+}
+///////////////////////////////////////////////////////////////////////////////
+static void merge(T* start, T* middle, T* end) {
+        // TODO
+        T* left = start;
+        T* right = end;
+        T i, j, k;
+        T n1 = middle - left + 1;
+        T n2 = right - middle;
+        /* Tạo các mảng tạm */
+        T *L = new T[n1], *R = new T[n2];
+        /* Copy dữ liệu sang các mảng tạm */
+        for (i = 0; i < n1; i++)
+            L[i] = left[i];
+        for (j = 0; j < n2; j++)
+            R[j] = middle[1 + j];
+
+        /* Gộp hai mảng tạm vừa rồi vào mảng arr*/
+        i = 0; // Khởi tạo chỉ số bắt đầu của mảng con đầu tiên
+        j = 0; // Khởi tạo chỉ số bắt đầu của mảng con thứ hai
+        k = 0; // IKhởi tạo chỉ số bắt đầu của mảng lưu kết quả
+        while (i < n1 && j < n2)
+        {
+            if (L[i] <= R[j])
+            {
+                left[k] = L[i];
+                i++;
+            }
+            else
+            {
+                left[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        /* Copy các phần tử còn lại của mảng L vào arr nếu có */
+        while (i < n1)
+        {
+            left[k] = L[i];
+            i++;
+            k++;
+        }
+
+        /* Copy các phần tử còn lại của mảng R vào arr nếu có */
+        while (j < n2)
+        {
+            left[k] = R[j];
+            j++;
+            k++;
+        }
+    //	delete L, R;
+    }
+    static void InsertionSort(T* start, T* end) {
+        // TODO
+        for (int i = 0; i<end - start; i++) {
+            char min = start[i];
+            int id = i;
+            for (int j = i; j<end - start; j++){
+                if (start[j]<min){
+                    id = j;
+                    min = start[j];
+                }
+            }
+            int temp = start[i];
+            start[i] = start[id];
+            start[id] = temp;
+        }
+    }
+    static void TimSort(T* start, T* end, int min_size) {
+        // TODO
+        // You must print out the array after using insertion sort and everytime calling method merge.
+        cout << "Insertion Sort: ";
+        for (int i = 0; i < end - start; i += min_size){
+            if (start+i+min_size<end) InsertionSort(start + i, start+i+min_size);
+            else InsertionSort(start + i, end);
+        }
+        printArray(start, end);
+        int i = 1;
+        for (int size = min_size; size < end - start; size = 2 * size){
+            for (int left = 0; left < end - start; left += 2 * size,i++){
+                cout << "Merge " << i << ": ";
+                int mid = (left + size - 1) < (end - start - 1) ? (left + size - 1) : (end - start - 1); 
+                int right = (left + 2 * size - 1) < (end - start - 1) ? (left + 2 * size - 1) : (end - start - 1); 
+                merge(&start[left], &start[mid], &start[right]);
+                printArray(start, end);
+            }
+        }
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+int maxNumberOfPeople(vector<int> &rooms, vector<int> &people, int k)
+{
+    std::sort(rooms.begin(), rooms.end());
+    std::sort(people.begin(), people.end());
+
+    int i = 0, j = 0, count = 0;
+    while (i < rooms.size() && j < people.size())
+    {
+        if (abs(rooms[i] - people[j]) <= k)
+        {
+            i++;
+            j++;
+            count++;
+        }
+        else if (rooms[i] < people[j] - k)
+        {
+            i++;
+        }
+        else
+        {
+            j++;
+        }
+    }
+
+    return count;
+}
+//////////////////////////////////////////////////////////////////////////////
+string minDiffPairs(int* arr, int n) {
+    string save = "";
+    sort(arr, arr + n);
+    int min = INT8_MAX;
+    for (int i = 0; i < n - 1; i++) {
+        int g = *(arr+i) ;
+        int k = *(arr + i + 1);
+        int a = abs(g-k);
+        if (min > a) {
+            min = a;
+        }
+    }
+    for (int i = 0; i < n - 1; i++) {
+        int a = abs(*(arr + i) - *(arr + i + 1));
+        if (a == min) {
+            save = save + "(" + to_string(*(arr + i)) + ", " + to_string(*(arr + i + 1)) + "), ";
+        }
+    }
+    if (save.length() > 1) {
+        save = save.substr(0, save.length() - 2);
+    }
+    return save;
+}
+//////////////////////////////////////////////////////////////////////////////
+struct Element
+{
+    int value;
+    int frequency;
+    int originalIndex;
+};
+
+bool compare(const Element &a, const Element &b)
+{
+    if (a.frequency != b.frequency)
+        return a.frequency > b.frequency;
+    else
+        return a.originalIndex < b.originalIndex;
+}
+
+void sortByFrequency(int arr[], int n)
+{
+    std::vector<Element> elements(n);
+    for (int i = 0; i < n; i++)
+    {
+        elements[i].value = arr[i];
+        elements[i].frequency = 0;
+        elements[i].originalIndex = i;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (arr[i] == elements[j].value)
+            {
+                elements[j].frequency++;
+                break;
+            }
+        }
+    }
+
+    stable_sort(elements.begin(), elements.end(), compare);
+
+    int index = 0;
+    for (const Element &element : elements)
+    {
+        Element copy = element;
+        while (copy.frequency > 0)
+        {
+            arr[index] = copy.value;
+            index++;
+            copy.frequency--;
+        }
+    }
+}
+//////////////////////////////////////////////////////////////////////////////
+double calculateDistance(const Point& p1, const Point& p2) {
+    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+}
+
+// Compare function to sort points by distance from des_point
+void closestKPoints(Point points[], int n, Point &des_point, int k){
+    // Create a vector of points
+    vector<Point> pointVector(points, points + n);
+
+    // Sort the points based on distance from des_point
+    sort(pointVector.begin(), pointVector.end(), [des_point](const Point& p1, const Point& p2) {
+        return calculateDistance(p1, des_point) < calculateDistance(p2, des_point);
+    });
+
+    for (int i = 0; i < k && i < static_cast<int>(pointVector.size()); i++){
+            pointVector[i].display();
+            cout<<endl;
+    }
+}

@@ -88,11 +88,11 @@ static T* Partition(T* start, T* end) {
         int j = count - 1;
         while (i <= j)
         {
-            while (start[i] < start[0] )
+            while (start[i] > start[0] )
             {
                 i++;
             }
-            while (start[j] > start[0] && j >= 1)
+            while (start[j] < start[0] && j >= 1)
             {
                 j--;
             }
