@@ -1,0 +1,151 @@
+// STUDENT ANSWER BEGIN
+    // STUDENT ANSWER BEGIN
+    // You can define other functions here to help you.
+    int height(Node *root)
+    {
+        if (root == nullptr)
+        {
+            return 0;
+        }
+        else
+        {
+            int lheight = height(root->pLeft);
+            int rheight = height(root->pRight);
+
+            if (lheight > rheight)
+            {
+                return (lheight + 1);
+            }
+            else
+            {
+                return (rheight + 1);
+            }
+        }
+    }
+    void printCurrentLevel(Node *root, int level)
+    {
+        if (root == NULL)
+            return;
+        if (level == 1)
+            printf("%d ", root->value);
+        else if (level > 1)
+        {
+            printCurrentLevel(root->pLeft, level - 1);
+            printCurrentLevel(root->pRight, level - 1);
+        }
+    }
+    void BFS()
+    {
+        int h = height(root);
+        for (int i = 1; i <= h; i++)
+        {
+            printCurrentLevel(root, i);
+        }
+    }
+    // STUDENT ANSWER END
+    // STUDENT ANSWER END
+
+////////////////////////////////////////////////////////////////////////////////////
+void longestPathSumRec(BTNode* root, int sum, int height, int &heightMax, int& result) {
+    if (!root) {
+        if (heightMax < height) {
+            heightMax = height;
+            result = sum;
+        } else if (heightMax == height && result < sum)
+            result = sum;
+        return;
+    }
+     longestPathSumRec(root->left, sum + root->val, height + 1, heightMax,result);
+     longestPathSumRec(root->right, sum + root->val, height + 1, heightMax,result);
+}
+int longestPathSum(BTNode* root) {
+    int heightMax = 0;
+    int result = -9999;
+    longestPathSumRec(root, 0, 0, heightMax,result);
+    return result;
+}
+//////////////////////////////////////////////////////////////////////////////////
+int lowestAncestor(BTNode* root, int a, int b) {
+    if(root == NULL) return -9999;
+    if(root->val == a){
+       return root->val;
+    }
+    else if(root->val == b){
+        return root->val;
+    }
+    int left = lowestAncestor(root->left,a,b);
+    int right = lowestAncestor(root->right,a,b);
+    if(left != -9999 && right != -9999) return root->val;
+    else if(left != -9999) return left;
+    return right;
+}
+//////////////////////////////////////////////////////////////////////////////////
+long long sumDigitPath(BTNode* root, long long sum = 0) {
+    if(root == nullptr) return 0;
+    if(root->left == nullptr && root->right == nullptr) return (sum*10+ root->val) % 27022001;
+    sum = (sum*10) % 27022001;
+    return (sumDigitPath(root->left,sum + root->val)% 27022001 +  sumDigitPath(root->right,sum + root->val)% 27022001)% 27022001;
+    
+}
+//////////////////////////////////////////////////////////////////////////////////
+int countTwoChildrenNodeREC(Node* root){
+    if(root == nullptr) return 0; 
+    else if(root->pLeft != nullptr && root->pRight != nullptr) return 1+ countTwoChildrenNodeREC(root->pLeft) + countTwoChildrenNodeREC(root->pRight);
+    return  countTwoChildrenNodeREC(root->pLeft) + countTwoChildrenNodeREC(root->pLeft);
+} 
+int countTwoChildrenNode(){
+    return countTwoChildrenNodeREC(root);
+}
+//////////////////////////////////////////////////////////////////////////////////
+   //* chiều cao của cây
+int getHeightRec(Node* root) {
+    if(root == NULL) return 0;
+    return 1 + max( getHeightRec(root->pLeft), getHeightRec(root->pRight));
+}
+int getHeight() {return  getHeightRec(root);}
+
+    //* Prefix
+void preOrderRec(Node* root, string & result) {
+    if(root == NULL) return;
+    result += to_string(root->value) + " ";
+    preOrderRec(root->pLeft,result);
+    preOrderRec(root->pRight,result);
+}
+string preOrder() {
+    string result;
+    preOrderRec(root,result);
+    return result;
+}
+void inOrderRec(Node* root, string & result) {
+    if(root == NULL) return;
+    inOrderRec(root->pLeft,result);
+    result += to_string(root->value) + " ";
+    inOrderRec(root->pRight,result);
+}
+string inOrder() {
+    string result;
+    inOrderRec(root,result);
+    return result;
+}
+
+void postOrderRec(Node* root, string & result) {
+    if(root == NULL) return;
+     postOrderRec(root->pLeft,result);
+     postOrderRec(root->pRight,result);
+      result += to_string(root->value) + " ";
+}
+string  postOrder() {
+    string result;
+    postOrderRec(root,result);
+    return result;
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+    //* tổng các node lá của cây
+int sumOfLeafsRec(Node* root){
+    if(root == NULL) return 0;
+    else if(root->pLeft == NULL && root->pRight == NULL) return root->value;
+    return sumOfLeafsRec(root->pLeft) + sumOfLeafsRec(root->pRight);
+}
+
+int sumOfLeafs(){return sumOfLeafsRec(root);}

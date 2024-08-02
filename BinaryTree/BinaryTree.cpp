@@ -124,7 +124,7 @@ void postOrderRec(Node* root, string & result) {
      postOrderRec(root->pRight,result);
       result += to_string(root->value) + " ";
 }
-string  postOrder() {.
+string  postOrder() {
     string result;
     postOrderRec(root,result);
     return result;
